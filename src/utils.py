@@ -79,9 +79,9 @@ def read_text(path: Path) -> str:
 
 # ── Timing decorator ──────────────────────────────────────────────────────────
 
-def timed(fn):
+def timed(fn: Any) -> Any:
     """Log wall-clock time of any function call."""
-    def wrapper(*args, **kwargs) -> Any:
+    def wrapper(*args: Any, **kwargs: Any) -> Any:
         t0 = time.perf_counter()
         result = fn(*args, **kwargs)
         elapsed = time.perf_counter() - t0

@@ -221,6 +221,11 @@ def _stream_query(pipeline: RAGPipeline, query: str) -> RAGResponse | None:
 
     sys.stdout.write("\n")   # newline after streamed tokens
     sys.stdout.flush()
+
+    # IDK guard responses yield no tokens — print the answer directly
+    if not accumulated and final_resp is not None and final_resp.answer:
+        console.print(final_resp.answer)
+
     return final_resp
 
 
