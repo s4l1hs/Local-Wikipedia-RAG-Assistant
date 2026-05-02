@@ -28,14 +28,25 @@ def main() -> None:
 
     if args.mode == "ui":
         app_path = Path(__file__).parent / "ui" / "streamlit_app.py"
-        subprocess.run(
-            ["streamlit", "run", str(app_path), "--server.headless", "false"],
-            check=True,
-        )
+        try:
+            subprocess.run(
+                ["streamlit", "run", str(app_path), "--server.headless", "false"],
+                check=True,
+            )
+        except KeyboardInterrupt:
+            pass
+        except subprocess.CalledProcessError:
+            pass
     else:
-        from ui.cli import run_cli
-        run_cli()
+        try:
+            from ui.cli import run_cli
+            run_cli()
+        except KeyboardInterrupt:
+            pass
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        pass
