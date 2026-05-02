@@ -10,23 +10,31 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
-import tiktoken
-
 logger = logging.getLogger(__name__)
 
 # ── Token counting ────────────────────────────────────────────────────────────
-_TOKENIZER = tiktoken.get_encoding("cl100k_base")  # proxy for LLaMA-family models
+# Lazy-loaded so the module can be imported without tiktoken (e.g. in tests).
+_TOKENIZER = None
+
+
+def _get_tokenizer():
+    global _TOKENIZER
+    if _TOKENIZER is None:
+        import tiktoken  # noqa: PLC0415
+        _TOKENIZER = tiktoken.get_encoding("cl100k_base")
+    return _TOKENIZER
 
 
 def count_tokens(text: str) -> int:
-    return len(_TOKENIZER.encode(text))
+    return len(_get_tokenizer().encode(text))
 
 
 def truncate_to_tokens(text: str, max_tokens: int) -> str:
-    tokens = _TOKENIZER.encode(text)
+    enc    = _get_tokenizer()
+    tokens = enc.encode(text)
     if len(tokens) <= max_tokens:
         return text
-    return _TOKENIZER.decode(tokens[:max_tokens])
+    return enc.decode(tokens[:max_tokens])
 
 
 # ── Text cleaning ─────────────────────────────────────────────────────────────
