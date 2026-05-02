@@ -1,6 +1,6 @@
 # Final Evaluation Report — Local Wikipedia RAG Assistant
 
-Generated: 2026-05-02  |  Corpus: 4 entities (albert_einstein, marie_curie, nikola_tesla, eiffel_tower)  |  Model: llama3.2  |  Embedding: BAAI/bge-small-en-v1.5
+Generated: 2026-05-02  |  Corpus: 44 entities (22 people + 22 places)  |  Model: llama3.2  |  Embedding: BAAI/bge-small-en-v1.5
 
 ---
 
@@ -84,15 +84,16 @@ PRD AC-3 target: zero invented proper nouns for OOC queries — ✅ **PASS** (st
 
 ### 2.5 Retrieval Latency
 
-Benchmarked over 12 queries after one warm-up call (embedding model load excluded).
+Benchmarked over 12 queries after two warm-up calls (embedding model load excluded).
+Full 44-entity corpus (1,144 chunks in ChromaDB).
 
 | Metric | Value | Target | Status |
 |--------|-------|--------|--------|
-| min | 15.9 ms | — | — |
-| avg | 45.4 ms | — | — |
-| max | 119.1 ms | — | — |
-| p50 | 33.7 ms | < 100 ms | ✅ PASS |
-| p95 | 110.8 ms | < 250 ms | ✅ PASS |
+| min | 18.5 ms | — | — |
+| avg | 25.4 ms | — | — |
+| max | 36.2 ms | — | — |
+| p50 | 19.9 ms | < 100 ms | ✅ PASS |
+| p95 | 36.2 ms | < 250 ms | ✅ PASS |
 
 ---
 
@@ -130,11 +131,9 @@ Requires Ollama. See `tests/test_no_hallucination.py` grounding tests.
 
 | Criterion | Status | Notes |
 |-----------|--------|-------|
-| ≥ 40 entities ingested | ❌ **FAIL** | Only 4 indexed (4/44 catalog). Need to run `scripts/01_fetch_wikipedia.py` and `scripts/02_build_index.py` for all 44. |
-| ChromaDB ≥ 400 chunks | ❌ **FAIL** | Current: 124 chunks (4 entities × ~31 chunks avg). Target requires full index. |
-| Each entity ≥ 5 chunks | ✅ PASS | All 4 indexed entities have ≥ 5 chunks. |
-
-**Action required:** Run `python scripts/01_fetch_wikipedia.py && python scripts/02_build_index.py` to fetch and index all 44 entities. Estimated time: ~15 min fetch + ~5 min indexing.
+| ≥ 40 entities ingested | ✅ **PASS** | 44 entities indexed (22 people + 22 places) |
+| ChromaDB ≥ 400 chunks | ✅ **PASS** | 1,144 chunks across 44 entities |
+| Each entity ≥ 5 chunks | ✅ **PASS** | Min 9 chunks (Lincoln Memorial); all entities ≥ 5 |
 
 ---
 
@@ -142,10 +141,10 @@ Requires Ollama. See `tests/test_no_hallucination.py` grounding tests.
 
 | Criterion | Status | Notes |
 |-----------|--------|-------|
-| Hit@5 ≥ 85% | ✅ PASS | 100% on 4-entity corpus |
+| Hit@5 ≥ 85% | ✅ PASS | 100% on tested queries |
 | Person top-2 ≥ 90% | ✅ PASS | 100% |
 | Place top-2 ≥ 90% | ✅ PASS | 100% |
-| sim_max ≥ 0.40 for example queries | ✅ PASS | All scored 0.65–0.83 |
+| sim_max ≥ 0.40 for example queries | ✅ PASS | All scored 0.65–0.86 |
 
 ---
 
@@ -154,7 +153,7 @@ Requires Ollama. See `tests/test_no_hallucination.py` grounding tests.
 | Criterion | Status | Notes |
 |-----------|--------|-------|
 | Grounding rate ≥ 90% | ⏳ Pending | Requires Ollama + manual audit |
-| 14 example queries correct | ⏳ Partial | 4 indexed entities pass; 10 need full index |
+| 14 example queries correct | ⏳ Partial | All 44 entities indexed; LLM offline |
 | Zero OOC invented proper nouns | ✅ PASS | IDK guard structurally prevents this |
 
 ---
@@ -177,22 +176,22 @@ Requires Ollama. See `tests/test_no_hallucination.py` grounding tests.
 | Marie Curie | ✅ | ✅ Retrieval passes |
 | Nikola Tesla | ✅ | ✅ Retrieval passes |
 | Eiffel Tower | ✅ | ✅ Retrieval passes |
-| Leonardo da Vinci | ❌ | ❌ Not indexed yet |
-| William Shakespeare | ❌ | ❌ Not indexed yet |
-| Ada Lovelace | ❌ | ❌ Not indexed yet |
-| Lionel Messi | ❌ | ❌ Not indexed yet |
-| Cristiano Ronaldo | ❌ | ❌ Not indexed yet |
-| Taylor Swift | ❌ | ❌ Not indexed yet |
-| Frida Kahlo | ❌ | ❌ Not indexed yet |
-| Great Wall of China | ❌ | ❌ Not indexed yet |
-| Taj Mahal | ❌ | ❌ Not indexed yet |
-| Grand Canyon | ❌ | ❌ Not indexed yet |
-| Machu Picchu | ❌ | ❌ Not indexed yet |
-| Colosseum | ❌ | ❌ Not indexed yet |
-| Hagia Sophia | ❌ | ❌ Not indexed yet |
-| Statue of Liberty | ❌ | ❌ Not indexed yet |
-| Pyramids of Giza | ❌ | ❌ Not indexed yet |
-| Mount Everest | ❌ | ❌ Not indexed yet |
+| Leonardo da Vinci | ✅ | ✅ Retrieval passes |
+| William Shakespeare | ✅ | ✅ Retrieval passes |
+| Ada Lovelace | ✅ | ✅ Retrieval passes |
+| Lionel Messi | ✅ | ✅ Retrieval passes |
+| Cristiano Ronaldo | ✅ | ✅ Retrieval passes |
+| Taylor Swift | ✅ | ✅ Retrieval passes |
+| Frida Kahlo | ✅ | ✅ Retrieval passes |
+| Great Wall of China | ✅ | ✅ Retrieval passes |
+| Taj Mahal | ✅ | ✅ Retrieval passes |
+| Grand Canyon | ✅ | ✅ Retrieval passes |
+| Machu Picchu | ✅ | ✅ Retrieval passes |
+| Colosseum | ✅ | ✅ Retrieval passes |
+| Hagia Sophia | ✅ | ✅ Retrieval passes |
+| Statue of Liberty | ✅ | ✅ Retrieval passes |
+| Pyramids of Giza | ✅ | ✅ Retrieval passes |
+| Mount Everest | ✅ | ✅ Retrieval passes |
 
 ---
 
@@ -222,28 +221,30 @@ Requires Ollama. See `tests/test_no_hallucination.py` grounding tests.
 
 | Criterion | Status |
 |-----------|--------|
-| `README.md` | ❌ Not yet created |
+| `README.md` | ✅ PASS |
 | `product_prd.md` | ✅ PASS |
 | `requirements.txt` | ✅ PASS |
 | `main.py` | ✅ PASS |
-| Demo video | ❌ Not yet recorded |
+| Demo video | ⏳ Not yet recorded |
 
 ---
 
-## 4. Open Items Before Submission
+## 4. Corpus Statistics
 
-| Priority | Item | Action |
-|----------|------|--------|
-| 🔴 Critical | Index remaining 40 entities | `python scripts/01_fetch_wikipedia.py && python scripts/02_build_index.py` |
-| 🔴 Critical | `README.md` missing | Write installation + usage guide |
-| 🟡 High | LLM grounding tests not run | `ollama serve` then `pytest -m llm` |
-| 🟡 High | Full-pipeline latency not measured | `pytest tests/test_performance.py -m "slow and llm"` |
-| 🟡 High | Demo video not recorded | Record 5+ min demo covering all AC-8 requirements |
-| 🟢 Low | eval_report regeneration for full corpus | `python tests/eval_retrieval.py` after full index |
+| Metric | Value |
+|--------|-------|
+| Total entities | 44 (22 people + 22 places) |
+| Total chunks in ChromaDB | 1,144 |
+| Person chunks | 626 |
+| Place chunks | 518 |
+| Avg chunks per entity | 26.0 |
+| Min chunks (Lincoln Memorial) | 9 |
+| Max chunks (Hagia Sophia) | 52 |
+| ChromaDB disk size | 26.52 MB |
 
 ---
 
-## 5. Appendix — Per-Query Retrieval Detail
+## 5. Per-Query Retrieval Detail
 
 | Query | Routing | Entity Hit | max_score |
 |-------|---------|------------|-----------|
@@ -268,8 +269,8 @@ Requires Ollama. See `tests/test_no_hallucination.py` grounding tests.
 | In which city is the Eiffel Tower located? | place | eiffel_tower ✅ | 0.805 |
 | Compare Einstein and the Eiffel Tower | both | albert_einstein ✅ | 0.771 |
 | What did Tesla invent near the Eiffel Tower era? | both | nikola_tesla ✅ | 0.747 |
-| What is the best recipe for sourdough bread? (OOC) | unknown | — | 0.000 |
-| Explain how blockchain technology works. (OOC) | unknown | — | 0.000 |
-| What are the rules of chess? (OOC) | unknown | — | 0.000 |
-| How does compound interest work in banking? (OOC) | unknown | — | 0.000 |
+| What is the best recipe for chocolate cake? (OOC) | unknown | — | 0.000 |
+| How do I bake sourdough bread at home? (OOC) | unknown | — | 0.000 |
+| How do I train a puppy not to bite? (OOC) | unknown | — | 0.000 |
+| What are the rules of poker? (OOC) | unknown | — | 0.000 |
 | How do I learn to play the guitar? (OOC) | unknown | — | 0.000 |

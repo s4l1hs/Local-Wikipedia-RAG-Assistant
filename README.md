@@ -370,17 +370,16 @@ For a detailed architecture comparison (Option A vs Option B) and tradeoff analy
 
 ## Evaluation Results
 
-Evaluated on a 4-entity development corpus (Albert Einstein, Marie Curie, Nikola Tesla,
-Eiffel Tower) — 26 queries, 189 tests passing. Full results in
-[`data/final_eval_report.md`](data/final_eval_report.md).
+Evaluated on the full 44-entity corpus (1,144 chunks) — 26 queries, 189 tests passing.
+Full results in [`data/final_eval_report.md`](data/final_eval_report.md).
 
 | Metric | Score | PRD Target | Status |
 |--------|-------|-----------|--------|
 | Routing accuracy | 100.0% (26/26) | ≥ 80% | ✅ Pass |
 | Hit@5 (retrieval) | 100.0% (21/21 in-corpus) | ≥ 85% | ✅ Pass |
 | OOC rejection rate | 100.0% (13/13 OOC queries) | ≥ 95% | ✅ Pass |
-| Retrieval p50 latency | 33.7 ms | < 100 ms | ✅ Pass |
-| Retrieval p95 latency | 110.8 ms | < 250 ms | ✅ Pass |
+| Retrieval p50 latency | 19.9 ms | < 100 ms | ✅ Pass |
+| Retrieval p95 latency | 36.2 ms | < 250 ms | ✅ Pass |
 | Hallucination rate (retrieval layer) | 0% | 0% | ✅ Pass |
 | Full-pipeline p95 latency | — (LLM offline during eval) | < 5 000 ms | ⏳ |
 | Answer grounding rate | — (LLM offline during eval) | ≥ 90% | ⏳ |

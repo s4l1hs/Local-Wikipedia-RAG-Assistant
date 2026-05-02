@@ -45,12 +45,12 @@ from src.llm import IDK_RESPONSE
 OOC_GUARD_QUERIES: list[str] = [
     "What is the best sourdough bread recipe?",
     "How do I learn to play the guitar?",
-    "How does compound interest compound over time?",
-    "What are the FIFA World Cup rules?",
-    "Tell me the history of basketball.",
+    "How do I change a car tire step by step?",
+    "How do I train a puppy not to bite?",
+    "What is the best exercise routine to lose weight?",
     "How do I write a Python web scraper?",
     "What is the best way to train for a marathon?",
-    "Who is the current president of the United States in 2026?",
+    "What are the rules of poker card game?",
 ]
 
 

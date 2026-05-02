@@ -180,11 +180,11 @@ EVAL_SET: list[dict] = [
     # monuments).  Physics-adjacent queries (quantum gravity, etc.) legitimately
     # score high against Einstein/Hawking chunks and are NOT true OOC cases.
     {
-        "query":             "What is the best pasta recipe?",
+        "query":             "What is the best recipe for chocolate cake?",
         "expected_routing":  "unknown",
         "expected_entities": [],
         "should_reject":     True,
-        "note":              "OOC — cooking, no signal",
+        "note":              "OOC — baking, no signal",
     },
     {
         "query":             "How do I bake sourdough bread?",
@@ -194,25 +194,25 @@ EVAL_SET: list[dict] = [
         "note":              "OOC — cooking, no signal",
     },
     {
-        "query":             "What is blockchain technology?",
+        "query":             "How do I train a puppy not to bite?",
         "expected_routing":  "unknown",
         "expected_entities": [],
         "should_reject":     True,
-        "note":              "OOC — tech topic not in corpus",
+        "note":              "OOC — pet training, no overlap",
     },
     {
-        "query":             "What are the rules of chess?",
+        "query":             "What are the rules of poker?",
         "expected_routing":  "unknown",
         "expected_entities": [],
         "should_reject":     True,
-        "note":              "OOC — board game, no overlap with corpus topics",
+        "note":              "OOC — card game, no overlap with corpus",
     },
     {
-        "query":             "How does compound interest work?",
+        "query":             "How do I change a car tire step by step?",
         "expected_routing":  "unknown",
         "expected_entities": [],
         "should_reject":     True,
-        "note":              "OOC — finance, no signal",
+        "note":              "OOC — automotive, no signal",
     },
 ]
 

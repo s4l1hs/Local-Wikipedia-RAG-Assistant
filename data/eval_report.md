@@ -1,6 +1,6 @@
 # Retrieval Evaluation Report
 
-Generated: 2026-05-02 09:22 UTC  |  Top-K: 5  |  Threshold: 0.55  |  Indexed entities: 4
+Generated: 2026-05-02 12:45 UTC  |  Top-K: 5  |  Threshold: 0.55  |  Indexed entities: 44
 
 ## Summary
 
@@ -11,7 +11,7 @@ Generated: 2026-05-02 09:22 UTC  |  Top-K: 5  |  Threshold: 0.55  |  Indexed ent
 | MRR | 0.967 (15 in-corpus) | — | ℹ️ info |
 | OOC Rejection Rate | 100.0% (5 queries) | ≥60% | ✅ PASS |
 
-**Indexed entities**: albert_einstein, eiffel_tower, marie_curie, nikola_tesla
+**Indexed entities**: abraham_lincoln, acropolis_of_athens, ada_lovelace, albert_einstein, amazon_rainforest, angkor_wat, aristotle, cleopatra, colosseum, cristiano_ronaldo, eiffel_tower, florence_nightingale, frida_kahlo, grand_canyon, great_wall_of_china, hagia_sophia, isaac_newton, istanbul, leonardo_da_vinci, lincoln_memorial, lionel_messi, machu_picchu, mahatma_gandhi, marie_curie, martin_luther_king_jr, mount_everest, napoleon_bonaparte, nelson_mandela, nikola_tesla, pablo_picasso, petra, pompeii, pyramids_of_giza, statue_of_liberty, stephen_hawking, stonehenge, taj_mahal, taylor_swift, tokyo, venice, victoria_falls, william_shakespeare, wolfgang_amadeus_mozart, yellowstone_national_park
 
 ## Per-Query Results
 
@@ -32,11 +32,11 @@ Generated: 2026-05-02 09:22 UTC  |  Top-K: 5  |  Threshold: 0.55  |  Indexed ent
 | 13 | What landmark was built for the 1889 World's Fair? | place | place | ✅ | eiffel_tower | ✅ | 1.000 | — |
 | 14 | Compare Einstein and the Eiffel Tower | both | both | ✅ | albert_einstein, eiffel_tower | ✅ | 1.000 | — |
 | 15 | What did Tesla invent near the Eiffel Tower era? | both | both | ✅ | nikola_tesla, eiffel_tower | ✅ | 1.000 | — |
-| 16 | What is the best pasta recipe? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
+| 16 | What is the best recipe for chocolate cake? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
 | 17 | How do I bake sourdough bread? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
-| 18 | What is blockchain technology? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
-| 19 | What are the rules of chess? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
-| 20 | How does compound interest work? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
+| 18 | How do I train a puppy not to bite? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
+| 19 | What are the rules of poker? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
+| 20 | How do I change a car tire step by step? | unknown | unknown | ✅ | (ooc) | — | — | ✅ |
 ## Interpretation
 
 - **Routing Accuracy ≥ 80%**: Router correctly classifies query intent.
