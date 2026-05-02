@@ -24,8 +24,6 @@ def main() -> None:
         default="ui",
         help="ui = Streamlit browser app (default) | cli = terminal chat",
     )
-    parser.add_argument("--show-sources", action="store_true", default=True)
-    parser.add_argument("--debug",        action="store_true", default=False)
     args = parser.parse_args()
 
     if args.mode == "ui":
@@ -36,7 +34,7 @@ def main() -> None:
         )
     else:
         from ui.cli import run_cli
-        run_cli(show_sources=args.show_sources, show_debug=args.debug)
+        run_cli()
 
 
 if __name__ == "__main__":
