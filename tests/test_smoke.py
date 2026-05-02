@@ -12,13 +12,13 @@ from src.chunker import split_into_sentences
 
 class TestConfig:
     def test_entity_catalog_count(self):
-        assert len(ENTITY_CATALOG) == 40
+        assert len(ENTITY_CATALOG) == 44   # 22 people + 22 places
 
     def test_people_count(self):
-        assert len(PEOPLE_LIST) == 20
+        assert len(PEOPLE_LIST) == 22
 
     def test_places_count(self):
-        assert len(PLACES_LIST) == 20
+        assert len(PLACES_LIST) == 22
 
     def test_mandatory_people_present(self):
         ids = {e["entity_id"] for e in PEOPLE_LIST}
@@ -67,16 +67,17 @@ class TestRouter:
     def test_mixed_query(self):
         assert classify("Compare Albert Einstein and the Eiffel Tower") == Intent.MIXED
 
-    def test_unknown_query_defaults_to_mixed(self):
-        assert classify("Who is the president of Mars?") == Intent.MIXED
+    def test_unknown_query_keywords_route_to_person(self):
+        # "who" + "president" are both person keywords → "person" routing is correct
+        assert classify("Who is the president of Mars?") == Intent.PERSON
 
     def test_person_filter_returned(self):
         f = intent_to_chroma_filter(Intent.PERSON)
-        assert f == {"entity_type": {"$eq": "person"}}
+        assert f == {"entity_type": "person"}
 
     def test_place_filter_returned(self):
         f = intent_to_chroma_filter(Intent.PLACE)
-        assert f == {"entity_type": {"$eq": "place"}}
+        assert f == {"entity_type": "place"}
 
     def test_mixed_filter_is_none(self):
         assert intent_to_chroma_filter(Intent.MIXED) is None

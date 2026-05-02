@@ -76,8 +76,11 @@ class Settings(BaseSettings):
     max_context_tokens: int = 2000
 
     # ── Similarity thresholds ─────────────────────────────────────────────────
-    similarity_threshold_low: float = 0.30   # below → IDK (no LLM call)
-    similarity_threshold_mid: float = 0.45   # below → low-confidence prefix
+    # Empirically calibrated for BAAI/bge-small-en-v1.5:
+    # Background noise floor for unrelated English text is ~0.44–0.55.
+    # Re-calibrate in Phase 7 using eval/ROC sweep after full 44-entity index.
+    similarity_threshold_low: float = 0.55   # below → IDK (no LLM call)
+    similarity_threshold_mid: float = 0.70   # below → low-confidence prefix
 
     # ── ChromaDB ──────────────────────────────────────────────────────────────
     chroma_collection_name: str = "wikipedia_rag"
