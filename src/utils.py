@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import html as _html
 import logging
 import re
 import time
+import unicodedata
 from pathlib import Path
 from typing import Any
 
@@ -30,15 +32,25 @@ def truncate_to_tokens(text: str, max_tokens: int) -> str:
 # ── Text cleaning ─────────────────────────────────────────────────────────────
 
 def clean_wikipedia_text(raw: str) -> str:
-    """Strip markup artifacts left over from Wikipedia plain-text extraction."""
-    # Remove citation markers like [1], [citation needed]
+    if not raw:
+        return ""
     text = re.sub(r"\[\d+\]", "", raw)
+    text = re.sub(r"\[edit\]", "", text, flags=re.IGNORECASE)
     text = re.sub(r"\[citation needed\]", "", text, flags=re.IGNORECASE)
-    # Collapse multiple blank lines
+    text = re.sub(r"\[nb \d+\]", "", text)
     text = re.sub(r"\n{3,}", "\n\n", text)
-    # Remove lines that are only punctuation / whitespace
+    text = re.sub(r"[ \t]+", " ", text)
     lines = [l for l in text.splitlines() if l.strip() and not re.match(r"^[=\-\s]+$", l)]
     return "\n".join(lines).strip()
+
+
+def clean_text_deep(raw: str) -> str:
+    """HTML-decode + NFC-normalize + markup strip. Safe to call on already-cleaned text."""
+    if not raw:
+        return ""
+    text = _html.unescape(raw)
+    text = unicodedata.normalize("NFC", text)
+    return clean_wikipedia_text(text)
 
 
 # ── File I/O helpers ──────────────────────────────────────────────────────────
