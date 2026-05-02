@@ -58,13 +58,13 @@ def _get_db_stats() -> dict:
 
 if "messages" not in st.session_state:
     # Each message: {role, content, _resp (RAGResponse | None)}
-    st.session_state.messages: list[dict] = []
+    st.session_state.messages = []
 
 if "pending_query" not in st.session_state:
-    st.session_state.pending_query: str | None = None
+    st.session_state.pending_query = None
 
 if "ollama_status" not in st.session_state:
-    st.session_state.ollama_status: tuple[bool, str] | None = None
+    st.session_state.ollama_status = None
 
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
@@ -244,7 +244,10 @@ def _stream_response(pipeline: RAGPipeline, query: str) -> RAGResponse | None:
                 final_resp = item
     except Exception as exc:
         # Graceful degradation: show error, return synthetic IDK response
-        err_text = f"⚠️ **Generation error:** {exc}"
+        msg = str(exc)
+        if "connection refused" in msg.lower() or "connect" in msg.lower():
+            msg = "Ollama is not running. Start it with: `ollama serve`"
+        err_text = f"⚠️ **Generation error:** {msg}"
         placeholder.error(err_text)
         final_resp = RAGResponse(
             answer=err_text,
