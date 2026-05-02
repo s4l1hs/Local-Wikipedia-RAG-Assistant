@@ -1,6 +1,8 @@
 # ── Core RAG stack ────────────────────────────────────────────────────────────
 chromadb==0.5.23
+# Embedding: BAAI/bge-small-en-v1.5 — 384-dim, MTEB 62.17, 512-tok context window
 sentence-transformers==3.1.1
+tqdm>=4.66
 ollama==0.3.3
 
 # ── UI ────────────────────────────────────────────────────────────────────────

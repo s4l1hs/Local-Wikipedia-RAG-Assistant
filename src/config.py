@@ -51,8 +51,12 @@ class Settings(BaseSettings):
         return v
 
     # ── Embedding ─────────────────────────────────────────────────────────────
-    embedding_model: str = "nomic-embed-text"
-    embedding_fallback: str = "all-MiniLM-L6-v2"
+    embedding_model: str = "BAAI/bge-small-en-v1.5"
+    embed_batch_size: int = 32
+
+    @property
+    def embed_cache_dir(self) -> Path:
+        return PROJECT_ROOT / ".embed_cache"
 
     # ── Chunking ──────────────────────────────────────────────────────────────
     chunk_size: int = 400       # tokens per chunk
