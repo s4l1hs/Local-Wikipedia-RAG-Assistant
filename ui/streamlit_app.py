@@ -108,7 +108,7 @@ with st.sidebar:
 
     # Ollama health indicator
     st.subheader("🔌 Ollama Status")
-    col_h1, col_h2 = st.columns([3, 1])
+    col_h1, col_h2 = st.columns([1.5, 1])
     if col_h2.button("Check", use_container_width=True):
         with st.spinner("Checking…"):
             try:
